@@ -6,8 +6,9 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+use Tymon\JWTAuth\Contracts\JWTSubject;
 
-class User extends Authenticatable
+class User extends Authenticatable implements JWTSubject //, MustVerifyEmail
 {
     /** @use HasFactory<\Database\Factories\UserFactory> */
     use HasFactory, Notifiable;
@@ -18,7 +19,11 @@ class User extends Authenticatable
      * @var list<string>
      */
     protected $fillable = [
-        'name',
+        'user_type',
+        'first_name',
+        'last_name',
+        'designation',
+        'position',
         'email',
         'password',
     ];
@@ -44,5 +49,41 @@ class User extends Authenticatable
             'email_verified_at' => 'datetime',
             'password' => 'hashed',
         ];
+    }
+
+        public function getJWTIdentifier()
+    {
+        return $this->getKey();
+    }
+
+    public function getJWTCustomClaims(): array
+    {
+        $nominees = $this->nominee;
+
+        return [
+            'user_type' => $this->user_type,
+            'email' => $this->email,
+            'first_name' => $this->first_name,
+            'last_name' => $this->last_name,
+            'designation' => $this->designation,
+            'position' => $this->position,
+
+            'nominees' => $nominees->map(function ($nominee) {
+            return [
+                'nominee_type' => $nominee->nominee_type,
+                'nominee_category' => $nominee->nominee_category,
+                'region' => $nominee->region,
+                'province' => $nominee->province,
+                'nominee_name' => $nominee->nominee_name,
+                'status' => $nominee->status,
+            ];
+        }),
+        ];
+
+    }
+
+    public function nominee()
+    {
+        return $this->hasMany(Nominee::class, 'user_id');
     }
 }
