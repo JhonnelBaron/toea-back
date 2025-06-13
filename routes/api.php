@@ -12,3 +12,13 @@ Route::get('/user', function (Request $request) {
 Route::post('login', [AuthController::class, 'login']);
 Route::post('register', [AuthController::class, 'register']);
 Route::post('logout', [AuthController::class, 'logout']);
+Route::post('/verify-otp', [AuthController::class, 'verifyOtp']);
+Route::post('/resend-otp', [AuthController::class, 'resendOtp']);
+Route::post('/password/email', [AuthController::class, 'sendResetLinkEmail']);
+route::post('/password/reset', [AuthController::class, 'resetPassword']);
+Route::get('/password/reset', [AuthController::class, 'showResetForm']);
+Route::get('/password/reset/{token}', function ($token) {
+    // Redirect to frontend route with the token and email as query parameters
+    $frontendUrl = config('app.frontend_url') . '/update-password?token=' . $token . '&email=' . request('email');
+    return redirect($frontendUrl);
+})->name('password.reset');
