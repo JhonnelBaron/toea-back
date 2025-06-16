@@ -75,7 +75,7 @@ class AuthController extends Controller implements HasMiddleware
      */
     public function logout()
     {
-        JWTAuth::logout();
+        JWTAuth::invalidate(JWTAuth::getToken());
 
         return response()->json(['message' => 'Successfully logged out']);
     }

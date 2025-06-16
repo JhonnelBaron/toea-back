@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Admin\CriteriaController;
 use App\Http\Controllers\AuthController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -22,3 +23,10 @@ Route::get('/password/reset/{token}', function ($token) {
     $frontendUrl = config('app.frontend_url') . '/update-password?token=' . $token . '&email=' . request('email');
     return redirect($frontendUrl);
 })->name('password.reset');
+
+
+Route::middleware(['auth:api'])->group(function () {
+    Route::post('/add', [CriteriaController::class, 'store']);
+    Route::post('/update/{id}', [CriteriaController::class, 'edit']);
+    
+});
