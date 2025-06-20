@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Models\Requirements\ARequirement;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Notifications\Notifiable;
@@ -27,5 +28,10 @@ class ACriteria extends Model
         'bti_ptcdtc',
         'bti_tas'
     ];
+
+    public function aRequirements()
+    {
+        return $this->hasMany(ARequirement::class, 'a_criteria_id');
+    }
 
 }
