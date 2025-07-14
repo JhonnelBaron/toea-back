@@ -28,6 +28,11 @@ class CriteriaRequest extends FormRequest
             'means_of_verification' => 'nullable|string',
             'criteria_function' => 'nullable|in:criteria,header,sub-header',
             'designated_offices' => 'nullable|array',
+
+                    // Nested validation for requirements
+        'aRequirements' => 'nullable|array',
+        'aRequirements.*.requirement_description' => 'nullable|string',
+        'aRequirements.*.point_value' => 'nullable|numeric',
         ];
     }
 }

@@ -28,4 +28,10 @@ class CriteriaController extends Controller
         return response($criteria, $criteria['status']);
     }
 
+    public function createRequirementA(Request $request)
+    {
+        $requirement = $this->criteriaService->addRequirement(($request->all()));
+        return response($requirement, $requirement['status']);
+    }
+
 }
