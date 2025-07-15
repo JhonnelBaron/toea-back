@@ -29,5 +29,6 @@ Route::middleware(['auth:api'])->group(function () {
     Route::post('/add', [CriteriaController::class, 'store']);
     Route::post('/update/{id}', [CriteriaController::class, 'edit']);
     Route::post('/create-requirement-a', [CriteriaController::class, 'createRequirementA']);
+    Route::get('/get-all', [CriteriaController::class, 'getAll']);
     
 });

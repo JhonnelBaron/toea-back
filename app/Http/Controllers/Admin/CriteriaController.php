@@ -16,6 +16,12 @@ class CriteriaController extends Controller
         $this->criteriaService = $criteriaService;
     }
 
+    public function getAll()
+    {
+        $criteria = $this->criteriaService->getAllCriterias();
+        return response($criteria, $criteria['status']);
+    }
+
     public function store(CriteriaRequest $request)
     {
         $criteria = $this->criteriaService->create($request->validated());

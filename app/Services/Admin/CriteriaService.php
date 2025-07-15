@@ -14,7 +14,13 @@ class CriteriaService
      */
     public function getAllCriterias()
     {
-        return ACriteria::all();
+        $criteria = ACriteria::with('aRequirements')->get();
+
+        return [
+            'status' => 200,
+            'message' => 'Criteria retrieved successfully.',
+            'data' => $criteria
+        ];
     }
 
     /**
