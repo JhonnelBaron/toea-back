@@ -26,9 +26,25 @@ Route::get('/password/reset/{token}', function ($token) {
 
 
 Route::middleware(['auth:api'])->group(function () {
+    //CRITERIA A
     Route::post('/add', [CriteriaController::class, 'store']);
     Route::post('/update/{id}', [CriteriaController::class, 'edit']);
     Route::post('/create-requirement-a', [CriteriaController::class, 'createRequirementA']);
     Route::get('/get-all', [CriteriaController::class, 'getAll']);
+
+    //CRITERIA B
+    Route::post('/add-b', [CriteriaController::class, 'storeB']);
+    Route::get('/get-all-b', [CriteriaController::class, 'getAllB']);
+
+    //CRITERIA C
+    Route::post('/add-c', [CriteriaController::class, 'storeC']);
+    Route::get('/get-all-c', [CriteriaController::class, 'getAllC']);
     
+    //CRITERIA D
+    Route::post('/add-d', [CriteriaController::class, 'storeD']);
+    Route::get('/get-all-d', [CriteriaController::class, 'getAllD']);
+
+    //CRITERIA E
+    Route::post('/add-e', [CriteriaController::class, 'storeE']);
+    Route::get('/get-all-e', [CriteriaController::class, 'getAllE']);
 });
