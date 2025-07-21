@@ -35,7 +35,13 @@ class CriteriaController extends Controller
 
     public function edit(CriteriaRequest $request, $id)
     {
-        $criteria = $this->criteriaService->update($id, $request->validated());
+        $criteria = $this->criteriaService->update($request->validated(), $id);
+        return response($criteria, $criteria['status']);
+    }
+
+    public function getCriteriaId($id)
+    {
+        $criteria = $this->criteriaService->getCriteriaId($id);
         return response($criteria, $criteria['status']);
     }
 
@@ -49,6 +55,18 @@ class CriteriaController extends Controller
     public function storeB(CriteriaRequestB $request)
     {
         $criteria = $this->criteriaService->createB($request->validated());
+        return response($criteria, $criteria['status']);
+    }
+
+    public function editB(CriteriaRequestB $request, $id)
+    {
+        $criteria = $this->criteriaService->updateB($request->validated(), $id);
+        return response($criteria, $criteria['status']);
+    }
+
+    public function getBCriteriaId($id)
+    {
+        $criteria = $this->criteriaService->getBCriteriaId($id);
         return response($criteria, $criteria['status']);
     }
     
@@ -65,6 +83,18 @@ class CriteriaController extends Controller
         return response($criteria, $criteria['status']);
     }
 
+    public function editC(CriteriaRequestC $request, $id)
+    {
+        $criteria = $this->criteriaService->updateC($request->validated(), $id);
+        return response($criteria, $criteria['status']);
+    }
+
+    public function getCCriteriaId($id)
+    {
+        $criteria = $this->criteriaService->getCCriteriaId($id);
+        return response($criteria, $criteria['status']);
+    }
+
     //CRITERIA D
     public function getAllD()
     {
@@ -75,6 +105,18 @@ class CriteriaController extends Controller
     public function storeD(CriteriaRequestD $request)
     {
         $criteria = $this->criteriaService->createD($request->all());
+        return response($criteria, $criteria['status']);
+    }
+
+    public function editD(CriteriaRequestD $request, $id)
+    {
+        $criteria = $this->criteriaService->updateD($request->all(), $id);
+        return response($criteria, $criteria['status']);
+    }
+
+    public function getDCriteriaId($id)
+    {
+        $criteria = $this->criteriaService->getDCriteriaId($id);
         return response($criteria, $criteria['status']);
     }
 
@@ -89,6 +131,15 @@ class CriteriaController extends Controller
         $criteria = $this->criteriaService->createE($request->all());
         return response($criteria, $criteria['status']);
     }
-
+    public function editE(CriteriaRequestE $request, $id)
+    {
+        $criteria = $this->criteriaService->updateE($request->all(), $id);
+        return response($criteria, $criteria['status']);
+    }
+    public function getECriteriaId($id)
+    {
+        $criteria = $this->criteriaService->getECriteriaId($id);
+        return response($criteria, $criteria['status']);
+    }
 
 }

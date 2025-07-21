@@ -29,22 +29,30 @@ Route::middleware(['auth:api'])->group(function () {
     //CRITERIA A
     Route::post('/add', [CriteriaController::class, 'store']);
     Route::post('/update/{id}', [CriteriaController::class, 'edit']);
-    Route::post('/create-requirement-a', [CriteriaController::class, 'createRequirementA']);
     Route::get('/get-all', [CriteriaController::class, 'getAll']);
+    Route::get('/get-criteria/{id}', [CriteriaController::class, 'getCriteriaId']);
 
     //CRITERIA B
     Route::post('/add-b', [CriteriaController::class, 'storeB']);
+    Route::post('/update-b/{id}', [CriteriaController::class, 'editB']);
     Route::get('/get-all-b', [CriteriaController::class, 'getAllB']);
+    Route::get('/get-criteria-b/{id}', [CriteriaController::class, 'getBCriteriaId']);
+    
 
     //CRITERIA C
     Route::post('/add-c', [CriteriaController::class, 'storeC']);
+    Route::post('/update-c/{id}', [CriteriaController::class, 'editC']);
     Route::get('/get-all-c', [CriteriaController::class, 'getAllC']);
+    Route::get('/get-criteria-c/{id}', [CriteriaController::class, 'getCCriteriaId']);
     
     //CRITERIA D
     Route::post('/add-d', [CriteriaController::class, 'storeD']);
+    Route::post('/update-d/{id}', [CriteriaController::class, 'editD']);
     Route::get('/get-all-d', [CriteriaController::class, 'getAllD']);
-
+    Route::get('/get-criteria-d/{id}', [CriteriaController::class, 'getDCriteriaId']);
     //CRITERIA E
     Route::post('/add-e', [CriteriaController::class, 'storeE']);
+    Route::post('/update-e/{id}', [CriteriaController::class, 'editE']);
     Route::get('/get-all-e', [CriteriaController::class, 'getAllE']);
+    Route::get('/get-criteria-e/{id}', [CriteriaController::class, 'getECriteriaId']);
 });
