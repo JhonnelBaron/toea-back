@@ -45,6 +45,18 @@ class CriteriaController extends Controller
         return response($criteria, $criteria['status']);
     }
 
+    public function TagsA(Request $request, $id)
+    {
+        // Expecting JSON like: { "fields": ["gp_small", "bti_tas"] }
+        $fields = (array) $request->input('fields', []);
+
+
+        $criteria = $this->criteriaService->BoolCriteriaA($id, $fields);
+
+        return response($criteria, $criteria['status']);
+    }
+
+
     //CRITERIA B
     public function getAllB()
     {
@@ -70,6 +82,13 @@ class CriteriaController extends Controller
         return response($criteria, $criteria['status']);
     }
     
+    public function TagsB(Request $request, $id)
+    {
+        // Expecting JSON like: { "fields": ["gp_small", "bti_tas"] }
+        $fields = (array) $request->input('fields', []);
+        $criteria = $this->criteriaService->BoolCriteriaB($id, $fields);
+        return response($criteria, $criteria['status']);
+    }
     //CRITERIA C
     public function getAllC()
     {
@@ -92,6 +111,14 @@ class CriteriaController extends Controller
     public function getCCriteriaId($id)
     {
         $criteria = $this->criteriaService->getCCriteriaId($id);
+        return response($criteria, $criteria['status']);
+    }
+
+    public function TagsC(Request $request, $id)
+    {
+        // Expecting JSON like: { "fields": ["gp_small", "bti_tas"] }
+        $fields = (array) $request->input('fields', []);
+        $criteria = $this->criteriaService->BoolCriteriaC($id, $fields);
         return response($criteria, $criteria['status']);
     }
 
@@ -120,6 +147,14 @@ class CriteriaController extends Controller
         return response($criteria, $criteria['status']);
     }
 
+    public function TagsD(Request $request, $id)
+    {
+        // Expecting JSON like: { "fields": ["gp_small", "bti_tas"] }
+        $fields = (array) $request->input('fields', []);
+        $criteria = $this->criteriaService->BoolCriteriaD($id, $fields);
+        return response($criteria, $criteria['status']);
+    }
+
     //CRITERIA E
     public function getAllE()
     {
@@ -139,6 +174,14 @@ class CriteriaController extends Controller
     public function getECriteriaId($id)
     {
         $criteria = $this->criteriaService->getECriteriaId($id);
+        return response($criteria, $criteria['status']);
+    }
+
+    public function TagsE(Request $request, $id)
+    {
+        // Expecting JSON like: { "fields": ["gp_small", "bti_tas"] }
+        $fields = (array) $request->input('fields', []);
+        $criteria = $this->criteriaService->BoolCriteriaE($id, $fields);
         return response($criteria, $criteria['status']);
     }
 

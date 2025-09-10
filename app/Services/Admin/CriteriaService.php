@@ -118,6 +118,30 @@ class CriteriaService
         ];
     }
 
+    public function BoolCriteriaA(int $id, array $fields = [])
+    {
+        $criteria = ACriteria::findOrFail($id);
+
+        $booleanFields = [
+            'bro_small', 'bro_medium', 'bro_large',
+            'gp_small', 'gp_medium', 'gp_large',
+            'bti_rtcstc', 'bti_ptcdtc', 'bti_tas'
+        ];
+
+        // Loop through all boolean fields
+        foreach ($booleanFields as $field) {
+            // If this field is included in $fields, set to true, otherwise false
+            $criteria->$field = in_array($field, $fields);
+        }
+
+        $criteria->save();
+        return [
+            'status' => 200,
+            'message' => 'Criteria updated successfully.',
+            'data' => $criteria
+        ];
+    }
+
     /**
      * Delete a criteria.
      *
@@ -218,6 +242,30 @@ class CriteriaService
         ];
     }
 
+    public function BoolCriteriaB(int $id, array $fields = [])
+    {
+        $criteria = BCriteria::findOrFail($id);
+
+        $booleanFields = [
+            'bro_small', 'bro_medium', 'bro_large',
+            'gp_small', 'gp_medium', 'gp_large',
+            'bti_rtcstc', 'bti_ptcdtc', 'bti_tas'
+        ];
+
+        // Loop through all boolean fields
+        foreach ($booleanFields as $field) {
+            // If this field is included in $fields, set to true, otherwise false
+            $criteria->$field = in_array($field, $fields);
+        }
+
+        $criteria->save();
+        return [
+            'status' => 200,
+            'message' => 'Criteria updated successfully.',
+            'data' => $criteria
+        ];
+    }
+
     //CRITERIA C
     public function getAllCCriterias()
     {
@@ -306,6 +354,30 @@ class CriteriaService
             'data' => $criteria
         ];
     }
+
+    public function BoolCriteriaC(int $id, array $fields = [])
+    {
+        $criteria = CCriteria::findOrFail($id);
+
+        $booleanFields = [
+            'bro_small', 'bro_medium', 'bro_large',
+            'gp_small', 'gp_medium', 'gp_large',
+            'bti_rtcstc', 'bti_ptcdtc', 'bti_tas'
+        ];
+
+        // Loop through all boolean fields
+        foreach ($booleanFields as $field) {
+            // If this field is included in $fields, set to true, otherwise false
+            $criteria->$field = in_array($field, $fields);
+        }
+
+        $criteria->save();
+        return [
+            'status' => 200,
+            'message' => 'Criteria updated successfully.',
+            'data' => $criteria
+        ];
+    }   
 
     //CRITERIA D
     public function getAllDCriterias()
@@ -396,6 +468,30 @@ class CriteriaService
         ];
     }
 
+    public function BoolCriteriaD(int $id, array $fields = [])
+    {
+        $criteria = DCriteria::findOrFail($id);
+
+        $booleanFields = [
+            'bro_small', 'bro_medium', 'bro_large',
+            'gp_small', 'gp_medium', 'gp_large',
+            'bti_rtcstc', 'bti_ptcdtc', 'bti_tas'
+        ];
+
+        // Loop through all boolean fields
+        foreach ($booleanFields as $field) {
+            // If this field is included in $fields, set to true, otherwise false
+            $criteria->$field = in_array($field, $fields);
+        }
+
+        $criteria->save();
+        return [
+            'status' => 200,
+            'message' => 'Criteria updated successfully.',
+            'data' => $criteria
+        ];
+    }
+
     //Criteria E
     public function getAllECriterias()
     {
@@ -480,6 +576,30 @@ class CriteriaService
         return [
             'status' => 200,
             'message' => 'Criteria retrieved successfully.',
+            'data' => $criteria
+        ];
+    }
+
+    public function BoolCriteriaE(int $id, array $fields = [])
+    {
+        $criteria = ECriteria::findOrFail($id);
+
+        $booleanFields = [
+            'bro_small', 'bro_medium', 'bro_large',
+            'gp_small', 'gp_medium', 'gp_large',
+            'bti_rtcstc', 'bti_ptcdtc', 'bti_tas'
+        ];
+
+        // Loop through all boolean fields
+        foreach ($booleanFields as $field) {
+            // If this field is included in $fields, set to true, otherwise false
+            $criteria->$field = in_array($field, $fields);
+        }
+
+        $criteria->save();
+        return [
+            'status' => 200,
+            'message' => 'Criteria updated successfully.',
             'data' => $criteria
         ];
     }
