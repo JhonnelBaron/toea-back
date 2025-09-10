@@ -34,4 +34,11 @@ class ACriteria extends Model
         return $this->hasMany(ARequirement::class, 'a_criteria_id');
     }
 
+    protected static function booted()
+    {
+        static::deleting(function ($criteria) {
+            $criteria->aRequirements()->delete();
+        });
+    }
+
 }

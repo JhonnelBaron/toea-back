@@ -150,7 +150,13 @@ class CriteriaService
      */
     public function deleteCriteria(int $id)
     {
-        ACriteria::destroy($id);
+        $criteria = ACriteria::findOrFail($id);
+        $criteria->delete();
+
+        return [
+            'status' => 200,
+            'message' => 'Criteria and its requirements deleted successfully.'
+        ];
     }
 
     // CRITERIA B
@@ -263,6 +269,17 @@ class CriteriaService
             'status' => 200,
             'message' => 'Criteria updated successfully.',
             'data' => $criteria
+        ];
+    }
+
+    public function deleteCriteriaB(int $id)
+    {
+        $criteria = BCriteria::findOrFail($id);
+        $criteria->delete();
+
+        return [
+            'status' => 200,
+            'message' => 'Criteria and its requirements deleted successfully.'
         ];
     }
 
@@ -379,6 +396,17 @@ class CriteriaService
         ];
     }   
 
+    public function deleteCriteriaC(int $id)
+    {
+        $criteria = CCriteria::findOrFail($id);
+        $criteria->delete();
+
+        return [
+            'status' => 200,
+            'message' => 'Criteria and its requirements deleted successfully.'
+        ];
+    }
+
     //CRITERIA D
     public function getAllDCriterias()
     {
@@ -492,6 +520,16 @@ class CriteriaService
         ];
     }
 
+    public function deleteCriteriaD(int $id)
+    {
+        $criteria = DCriteria::findOrFail($id);
+        $criteria->delete();
+
+        return [
+            'status' => 200,
+            'message' => 'Criteria and its requirements deleted successfully.'
+        ];
+    }
     //Criteria E
     public function getAllECriterias()
     {
@@ -601,6 +639,17 @@ class CriteriaService
             'status' => 200,
             'message' => 'Criteria updated successfully.',
             'data' => $criteria
+        ];
+    }
+
+    public function deleteCriteriaE(int $id)
+    {
+        $criteria = ECriteria::findOrFail($id);
+        $criteria->delete();
+
+        return [
+            'status' => 200,
+            'message' => 'Criteria and its requirements deleted successfully.'
         ];
     }
 }

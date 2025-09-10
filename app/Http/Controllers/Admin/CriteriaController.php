@@ -56,6 +56,12 @@ class CriteriaController extends Controller
         return response($criteria, $criteria['status']);
     }
 
+    public function deleteA($id)
+    {
+        $criteria = $this->criteriaService->deleteCriteria($id);
+        return response($criteria, $criteria['status']);
+    }
+
 
     //CRITERIA B
     public function getAllB()
@@ -89,6 +95,12 @@ class CriteriaController extends Controller
         $criteria = $this->criteriaService->BoolCriteriaB($id, $fields);
         return response($criteria, $criteria['status']);
     }
+
+    public function deleteB($id)
+    {
+        $criteria = $this->criteriaService->deleteCriteriaB($id);
+        return response($criteria, $criteria['status']);
+    }
     //CRITERIA C
     public function getAllC()
     {
@@ -119,6 +131,12 @@ class CriteriaController extends Controller
         // Expecting JSON like: { "fields": ["gp_small", "bti_tas"] }
         $fields = (array) $request->input('fields', []);
         $criteria = $this->criteriaService->BoolCriteriaC($id, $fields);
+        return response($criteria, $criteria['status']);
+    }
+
+    public function deleteC($id)
+    {
+        $criteria = $this->criteriaService->deleteCriteriaC($id);
         return response($criteria, $criteria['status']);
     }
 
@@ -155,6 +173,12 @@ class CriteriaController extends Controller
         return response($criteria, $criteria['status']);
     }
 
+    public function deleteD($id)
+    {
+        $criteria = $this->criteriaService->deleteCriteriaD($id);
+        return response($criteria, $criteria['status']);
+    }
+
     //CRITERIA E
     public function getAllE()
     {
@@ -182,6 +206,12 @@ class CriteriaController extends Controller
         // Expecting JSON like: { "fields": ["gp_small", "bti_tas"] }
         $fields = (array) $request->input('fields', []);
         $criteria = $this->criteriaService->BoolCriteriaE($id, $fields);
+        return response($criteria, $criteria['status']);
+    }
+
+    public function deleteE($id)
+    {
+        $criteria = $this->criteriaService->deleteCriteriaE($id);
         return response($criteria, $criteria['status']);
     }
 

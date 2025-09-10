@@ -33,4 +33,11 @@ class DCriteria extends Model
     {
         return $this->hasMany(DRequirement::class, 'd_criteria_id');
     }
+
+        protected static function booted()
+    {
+        static::deleting(function ($criteria) {
+            $criteria->dRequirements()->delete();
+        });
+    }
 }

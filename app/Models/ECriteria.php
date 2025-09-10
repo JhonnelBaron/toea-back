@@ -33,4 +33,11 @@ class ECriteria extends Model
     {
         return $this->hasMany(ERequirement::class, 'e_criteria_id');
     }
+
+        protected static function booted()
+    {
+        static::deleting(function ($criteria) {
+            $criteria->eRequirements()->delete();
+        });
+    }
 }
