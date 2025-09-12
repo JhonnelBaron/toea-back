@@ -28,6 +28,17 @@ return new class extends Migration
             $table->boolean('bti_rtcstc')->default(false);
             $table->boolean('bti_ptcdtc')->default(false);
             $table->boolean('bti_tas')->default(false);
+            $table->boolean('as')->default(false);
+            $table->boolean('legal')->default(false);
+            $table->boolean('co')->default(false);
+            $table->boolean('fms')->default(false);
+            $table->boolean('nitesd')->default(false);
+            $table->boolean('piad')->default(false);
+            $table->boolean('planning')->default(false);
+            $table->boolean('plo')->default(false);
+            $table->boolean('romo')->default(false);
+            $table->boolean('icto')->default(false);
+            $table->boolean('ws')->default(false);
             $table->timestamps();
         });
     }

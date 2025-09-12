@@ -1,7 +1,9 @@
 <?php
 
 use App\Http\Controllers\Admin\CriteriaController;
+use App\Http\Controllers\Admin\RopotiController;
 use App\Http\Controllers\AuthController;
+use App\Services\Admin\RopotiService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -66,4 +68,22 @@ Route::middleware(['auth:api'])->group(function () {
     Route::get('/get-criteria-e/{id}', [CriteriaController::class, 'getECriteriaId']);
     Route::post('/tags-e/{id}', [CriteriaController::class, 'TagsE']);
     Route::post('delete-e/{id}', [CriteriaController::class, 'deleteE']);
+
+    //Regions
+    Route::get('/regions', [RopotiController::class, 'getRO']);
+    Route::post('/regions', [RopotiController::class, 'addRO']);
+    Route::post('/regions/{id}', [RopotiController::class, 'editRO']);
+    Route::delete('/regions/{id}', [RopotiController::class, 'deleteRO']);
+
+    //Province
+    Route::get('/provinces', [RopotiController::class, 'getPO']);
+    Route::post('/provinces', [RopotiController::class, 'addPO']);
+    Route::post('/provinces/{id}', [RopotiController::class, 'editPO']);
+    Route::delete('/provinces/{id}', [RopotiController::class, 'deletePO']);
+
+    // Institutions
+    Route::get('/institutions', [RopotiController::class, 'getTI']);
+    Route::post('/institutions', [RopotiController::class, 'addTI']);
+    Route::post('/institutions/{id}', [RopotiController::class, 'editTI']);
+    Route::delete('/institutions/{id}', [RopotiController::class, 'deleteTI']);
 });

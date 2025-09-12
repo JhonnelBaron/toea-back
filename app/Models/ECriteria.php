@@ -26,7 +26,18 @@ class ECriteria extends Model
         'gp_large',
         'bti_rtcstc',
         'bti_ptcdtc',
-        'bti_tas'
+        'bti_tas',
+        'as',
+        'legal',
+        'co',
+        'fms',
+        'nitesd',
+        'piad',
+        'planning',
+        'plo',
+        'romo',
+        'icto',
+        'ws'
     ];
 
     public function eRequirements()
