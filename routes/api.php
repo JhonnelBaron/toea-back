@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\Admin\CriteriaController;
 use App\Http\Controllers\Admin\RopotiController;
+use App\Http\Controllers\Admin\UserController;
 use App\Http\Controllers\AuthController;
 use App\Services\Admin\RopotiService;
 use Illuminate\Http\Request;
@@ -86,4 +87,11 @@ Route::middleware(['auth:api'])->group(function () {
     Route::post('/institutions', [RopotiController::class, 'addTI']);
     Route::post('/institutions/{id}', [RopotiController::class, 'editTI']);
     Route::delete('/institutions/{id}', [RopotiController::class, 'deleteTI']);
+
+    // Users
+    Route::get('/users', [UserController::class, 'get']);
+    Route::post('/users', [UserController::class, 'add']);
+    Route::get('/users/{id}', [UserController::class, 'show']);
+    Route::post('/users/{id}', [UserController::class, 'update']);
+    Route::delete('/users/{id}', [UserController::class, 'delete']);
 });
