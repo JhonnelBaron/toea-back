@@ -58,34 +58,32 @@ class User extends Authenticatable implements JWTSubject //, MustVerifyEmail
         return $this->getKey();
     }
 
-    public function getJWTCustomClaims(): array
-    {
-        $nominees = $this->nominee;
+        public function getJWTCustomClaims(): array
+        {
+            $nominee = $this->nominee;
 
-        return [
-            'user_type' => $this->user_type,
-            'email' => $this->email,
-            'first_name' => $this->first_name,
-            'last_name' => $this->last_name,
-            'designation' => $this->designation,
-            'position' => $this->position,
-
-            'nominees' => $nominees->map(function ($nominee) {
             return [
-                'nominee_type' => $nominee->nominee_type,
-                'nominee_category' => $nominee->nominee_category,
-                'region' => $nominee->region,
-                'province' => $nominee->province,
-                'nominee_name' => $nominee->nominee_name,
-                'status' => $nominee->status,
-            ];
-        }),
-        ];
+                'user_type' => $this->user_type,
+                'email' => $this->email,
+                'first_name' => $this->first_name,
+                'last_name' => $this->last_name,
+                'designation' => $this->designation,
+                'office' => $this->office,
 
-    }
+                'nominee' => $nominee ? [
+                    'nominee_type'     => $nominee->nominee_type,
+                    'nominee_category' => $nominee->nominee_category,
+                    'region'           => $nominee->region,
+                    'province'         => $nominee->province,
+                    'nominee_name'     => $nominee->nominee_name,
+                    'status'           => $nominee->status,
+                ] : null,
+            ];
+        }
+
 
     public function nominee()
     {
-        return $this->hasMany(Nominee::class, 'user_id');
+        return $this->hasOne(Nominee::class, 'user_id');
     }
 }

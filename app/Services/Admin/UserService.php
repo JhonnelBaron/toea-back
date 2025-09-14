@@ -23,6 +23,8 @@ class UserService
     public function add($data)
     {
         $data['password'] = bcrypt($data['password']);
+        $data['email_verified_at'] = now(); // mark as verified
+
         $user = User::create($data);
 
         if ($user->user_type === 'nominee'){
@@ -80,19 +82,19 @@ class UserService
 
         $user->update($data);
 
-        if ($user->user_type === 'nominee') {
-            $user->nominee()->updateOrCreate(
-                ['user_id' => $user->id],
-                [
-                    'nominee_type' => $data['nominee_type'] ?? $user->nominee->nominee_type,
-                    'nominee_category' => $data['nominee_category'] ?? $user->nominee->nominee_category,
-                    'region' => $data['region'] ?? $user->nominee->region,
-                    'province' => $data['province'] ?? $user->nominee->province,
-                    'nominee_name' => $data['nominee_name'] ?? $user->nominee->nominee_name,
-                    'status' => $data['status'] ?? $user->nominee->status,
-                ]
-            );
-        }
+            if ($user->user_type === 'nominee') {
+                $user->nominee()->updateOrCreate(
+                    ['user_id' => $user->id],
+                    [
+                        'nominee_type'     => $data['nominee_type'] ?? $user->nominee?->nominee_type,
+                        'nominee_category' => $data['nominee_category'] ?? $user->nominee?->nominee_category,
+                        'region'           => $data['region'] ?? $user->nominee?->region,
+                        'province'         => $data['province'] ?? $user->nominee?->province,
+                        'nominee_name'     => $data['nominee_name'] ?? $user->nominee?->nominee_name,
+                        'status'           => $data['status'] ?? $user->nominee?->status,
+                    ]
+                );
+            }
 
         return [
             'status' => 200,
