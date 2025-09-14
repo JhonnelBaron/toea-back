@@ -56,6 +56,14 @@ class CriteriaController extends Controller
         return response($criteria, $criteria['status']);
     }
 
+    public function ExecuteConfigA(Request $request, $id)
+    {
+        // Expecting JSON like: { "fields": ["gp_small", "bti_tas"] }
+        $fields = (array) $request->input('fields', []);
+        $criteria = $this->criteriaService->executiveConfigA($id, $fields);
+        return response($criteria, $criteria['status']);
+    }
+
     public function deleteA($id)
     {
         $criteria = $this->criteriaService->deleteCriteria($id);
@@ -96,6 +104,14 @@ class CriteriaController extends Controller
         return response($criteria, $criteria['status']);
     }
 
+    public function ExecuteConfigB(Request $request, $id)
+    {
+        // Expecting JSON like: { "fields": ["gp_small", "bti_tas"] }
+        $fields = (array) $request->input('fields', []);
+        $criteria = $this->criteriaService->executiveConfigB($id, $fields);
+        return response($criteria, $criteria['status']);
+    }
+
     public function deleteB($id)
     {
         $criteria = $this->criteriaService->deleteCriteriaB($id);
@@ -131,6 +147,14 @@ class CriteriaController extends Controller
         // Expecting JSON like: { "fields": ["gp_small", "bti_tas"] }
         $fields = (array) $request->input('fields', []);
         $criteria = $this->criteriaService->BoolCriteriaC($id, $fields);
+        return response($criteria, $criteria['status']);
+    }
+
+    public function ExecuteConfigC(Request $request, $id)
+    {
+        // Expecting JSON like: { "fields": ["gp_small", "bti_tas"] }
+        $fields = (array) $request->input('fields', []);
+        $criteria = $this->criteriaService->executiveConfigC($id, $fields);
         return response($criteria, $criteria['status']);
     }
 
@@ -173,6 +197,14 @@ class CriteriaController extends Controller
         return response($criteria, $criteria['status']);
     }
 
+    public function ExecuteConfigD(Request $request, $id)
+    {
+        // Expecting JSON like: { "fields": ["gp_small", "bti_tas"] }
+        $fields = (array) $request->input('fields', []);
+        $criteria = $this->criteriaService->executiveConfigD($id, $fields);
+        return response($criteria, $criteria['status']);
+    }
+
     public function deleteD($id)
     {
         $criteria = $this->criteriaService->deleteCriteriaD($id);
@@ -206,6 +238,14 @@ class CriteriaController extends Controller
         // Expecting JSON like: { "fields": ["gp_small", "bti_tas"] }
         $fields = (array) $request->input('fields', []);
         $criteria = $this->criteriaService->BoolCriteriaE($id, $fields);
+        return response($criteria, $criteria['status']);
+    }
+
+    public function ExecuteConfigE(Request $request, $id)
+    {
+        // Expecting JSON like: { "fields": ["gp_small", "bti_tas"] }
+        $fields = (array) $request->input('fields', []);
+        $criteria = $this->criteriaService->executiveConfigE($id, $fields);
         return response($criteria, $criteria['status']);
     }
 

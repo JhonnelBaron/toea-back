@@ -35,6 +35,7 @@ Route::middleware(['auth:api'])->group(function () {
     Route::get('/get-all', [CriteriaController::class, 'getAll']);
     Route::get('/get-criteria/{id}', [CriteriaController::class, 'getCriteriaId']);
     Route::post('/tags-a/{id}', [CriteriaController::class, 'TagsA']);
+    Route::post('/execute-a/{id}', [CriteriaController::class, 'ExecuteConfigA']);
     Route::post('delete-a/{id}', [CriteriaController::class, 'deleteA']);
 
     //CRITERIA B
@@ -43,6 +44,7 @@ Route::middleware(['auth:api'])->group(function () {
     Route::get('/get-all-b', [CriteriaController::class, 'getAllB']);
     Route::get('/get-criteria-b/{id}', [CriteriaController::class, 'getBCriteriaId']);
     Route::post('/tags-b/{id}', [CriteriaController::class, 'TagsB']);
+    Route::post('/execute-b/{id}', [CriteriaController::class, 'ExecuteConfigB']);
     Route::post('delete-b/{id}', [CriteriaController::class, 'deleteB']);
     
 
@@ -52,6 +54,7 @@ Route::middleware(['auth:api'])->group(function () {
     Route::get('/get-all-c', [CriteriaController::class, 'getAllC']);
     Route::get('/get-criteria-c/{id}', [CriteriaController::class, 'getCCriteriaId']);
     Route::post('/tags-c/{id}', [CriteriaController::class, 'TagsC']);
+    Route::post('/execute-c/{id}', [CriteriaController::class, 'ExecuteConfigC']);
     Route::post('delete-c/{id}', [CriteriaController::class, 'deleteC']);
 
     //CRITERIA D
@@ -60,6 +63,7 @@ Route::middleware(['auth:api'])->group(function () {
     Route::get('/get-all-d', [CriteriaController::class, 'getAllD']);
     Route::get('/get-criteria-d/{id}', [CriteriaController::class, 'getDCriteriaId']);
     Route::post('/tags-d/{id}', [CriteriaController::class, 'TagsD']);
+    Route::post('/execute-d/{id}', [CriteriaController::class, 'ExecuteConfigD']);
     Route::post('delete-d/{id}', [CriteriaController::class, 'deleteD']);
 
     //CRITERIA E
@@ -68,6 +72,7 @@ Route::middleware(['auth:api'])->group(function () {
     Route::get('/get-all-e', [CriteriaController::class, 'getAllE']);
     Route::get('/get-criteria-e/{id}', [CriteriaController::class, 'getECriteriaId']);
     Route::post('/tags-e/{id}', [CriteriaController::class, 'TagsE']);
+    Route::post('/execute-e/{id}', [CriteriaController::class, 'ExecuteConfigE']);
     Route::post('delete-e/{id}', [CriteriaController::class, 'deleteE']);
 
     //Regions
