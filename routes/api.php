@@ -4,6 +4,7 @@ use App\Http\Controllers\Admin\CriteriaController;
 use App\Http\Controllers\Admin\RopotiController;
 use App\Http\Controllers\Admin\UserController;
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\Executive\EvaluationController;
 use App\Services\Admin\RopotiService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -99,4 +100,12 @@ Route::middleware(['auth:api'])->group(function () {
     Route::get('/users/{id}', [UserController::class, 'show']);
     Route::post('/users/{id}', [UserController::class, 'update']);
     Route::delete('/users/{id}', [UserController::class, 'delete']);
+
+    //Evaluation for Executive
+    Route::get('/criterias', [EvaluationController::class, 'index']);
+    Route::get('/criteria/a', [EvaluationController::class, 'getACriteria']);
+    Route::get('/criteria/b', [EvaluationController::class, 'getBCriteria']);
+    Route::get('/criteria/c', [EvaluationController::class, 'getCCriteria']);
+    Route::get('/criteria/d', [EvaluationController::class, 'getDCriteria']);
+    Route::get('/criteria/e', [EvaluationController::class, 'getECriteria']);
 });
