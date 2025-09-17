@@ -37,7 +37,9 @@ class ECriteria extends Model
         'plo',
         'romo',
         'icto',
-        'ws'
+        'ws',
+        'gadtwc',
+        'cbtveto'
     ];
 
     public function eRequirements()

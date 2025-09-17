@@ -157,7 +157,9 @@ class CriteriaService
         'plo',
         'romo',
         'icto',
-        'ws'
+        'ws',
+        'gadtwc',
+        'cbtveto'
         ];
 
         // Loop through all boolean fields
@@ -319,7 +321,9 @@ class CriteriaService
         'plo',
         'romo',
         'icto',
-        'ws'
+        'ws',
+        'gadtwc',
+        'cbtveto'
         ];
 
         // Loop through all boolean fields
@@ -475,7 +479,9 @@ class CriteriaService
         'plo',
         'romo',
         'icto',
-        'ws'
+        'ws',
+        'gadtwc',
+        'cbtveto'
         ];
 
         // Loop through all boolean fields
@@ -631,7 +637,9 @@ class CriteriaService
         'plo',
         'romo',
         'icto',
-        'ws'
+        'ws',
+        'gadtwc',
+        'cbtveto'
         ];
 
         // Loop through all boolean fields
@@ -785,7 +793,9 @@ class CriteriaService
         'plo',
         'romo',
         'icto',
-        'ws'
+        'ws',
+        'gadtwc',
+        'cbtveto'
         ];
 
         // Loop through all boolean fields

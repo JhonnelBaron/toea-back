@@ -37,7 +37,9 @@ class BCriteria extends Model
         'plo',
         'romo',
         'icto',
-        'ws'
+        'ws',
+        'gadtwc',
+        'cbtveto'
     ];
 
     public function bRequirements()

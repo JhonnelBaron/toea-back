@@ -37,7 +37,9 @@ class ACriteria extends Model
         'plo',
         'romo',
         'icto',
-        'ws'
+        'ws',
+        'gadtwc',
+        'cbtveto'
 
     ];
 
