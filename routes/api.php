@@ -4,10 +4,12 @@ use App\Http\Controllers\Admin\CriteriaController;
 use App\Http\Controllers\Admin\RopotiController;
 use App\Http\Controllers\Admin\UserController;
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\Executive\DashboardController;
 use App\Http\Controllers\Executive\EvaluationController;
 use App\Services\Admin\RopotiService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
+
 
 Route::get('/user', function (Request $request) {
     return $request->user();
@@ -108,4 +110,10 @@ Route::middleware(['auth:api'])->group(function () {
     Route::get('/criteria/c', [EvaluationController::class, 'getCCriteria']);
     Route::get('/criteria/d', [EvaluationController::class, 'getDCriteria']);
     Route::get('/criteria/e', [EvaluationController::class, 'getECriteria']);
+    Route::get('/nominee/{id}', [EvaluationController::class, 'get']);
+    Route::post('/score', [EvaluationController::class, 'store']);
+    Route::get('/score/{id}', [EvaluationController::class, 'showScore']);
+    Route::get('/scores/nominee/{id}', [EvaluationController::class, 'getScores']);
+    //Dashboard for Executive
+    Route::get('/dashboard/bro-nominees', [DashboardController::class, 'getBroNominees']);
 });

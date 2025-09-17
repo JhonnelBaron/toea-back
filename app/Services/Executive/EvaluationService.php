@@ -7,6 +7,12 @@ use App\Models\BCriteria;
 use App\Models\CCriteria;
 use App\Models\DCriteria;
 use App\Models\ECriteria;
+use App\Models\Evaluation\BroScore;
+use App\Models\Evaluation\BroSummary;
+use App\Models\Nominee;
+use Illuminate\Support\Facades\DB;
+use Tymon\JWTAuth\Contracts\Providers\JWT;
+use Tymon\JWTAuth\Facades\JWTAuth;
 
 class EvaluationService
 {
@@ -23,6 +29,8 @@ class EvaluationService
         'Regional Operations Management Office' => 'romo',
         'Information and Communication Office' => 'icto',
         'World Skills' => 'ws',
+        'Gender and Development TESDA Women Center' => 'gadtwc',
+        'Community-Based Technical Vocational Education and Training Office' => 'cbtveto'
     ];
 
     protected $criteriaModels = [
@@ -120,4 +128,126 @@ class EvaluationService
         return $this->fetchCriteria(ECriteria::class, 'eRequirements', $office);
     }
     
+    public function get($id)
+    {
+        $nominee = Nominee::find($id);
+        if (!$nominee) {
+            return [
+                'status' => 404,
+                'message' => 'Nominee not found',
+                'data' => null
+            ];
+        }
+
+        return [
+            'status' => 200,
+            'message' => 'Nominee retrieved successfully',
+            'data' => $nominee
+        ];
+    }
+
+   //scoring evaluation
+    public function addScore(array $data)
+    {
+        return DB::transaction(function () use ($data) {
+            // 1. Ensure nominee has a BroSummary
+            $summary = BroSummary::firstOrCreate(
+                ['nominee_id' => $data['nominee_id']],
+                [
+                    'final_score' => 0,
+                    'bro_total'   => 0,
+                    'bro_a'       => 0,
+                    'bro_b'       => 0,
+                    'bro_c'       => 0,
+                    'bro_d'       => 0,
+                    'bro_e'       => 0
+                ]
+            );
+
+            // 2. Handle attachment if present
+            $attachmentPath = null;
+            $attachmentName = null;
+            $attachmentType = null;
+
+            if (isset($data['attachment']) && $data['attachment'] instanceof \Illuminate\Http\UploadedFile) {
+                $file = $data['attachment'];
+                $attachmentPath = $file->store('attachments', 'public');
+                $attachmentName = $file->getClientOriginalName();
+                $attachmentType = $file->getClientMimeType();
+            }
+
+            // 3. Update or create BroScore entry
+            $broScore = BroScore::updateOrCreate(
+                [
+                    'user_id'        => JWTAuth::user()->id,
+                    'nominee_id'     => $data['nominee_id'],
+                    'criteria_table' => $data['criteria_table'],
+                    'criteria_id'    => $data['criteria_id'],
+                ],
+                [
+                    'bro_summary_id'  => $summary->id,
+                    'score'           => $data['score'],
+                    'remarks'         => $data['remarks'] ?? null,
+                    'attachment_path' => $attachmentPath,
+                    'attachment_name' => $attachmentName,
+                    'attachment_type' => $attachmentType,
+                ]
+            );
+
+            // 4. Update summary based on criteria_table
+            $column = match ($data['criteria_table']) {
+                'a_criterias' => 'bro_a',
+                'b_criterias' => 'bro_b',
+                'c_criterias' => 'bro_c',
+                'd_criterias' => 'bro_d',
+                'e_criterias' => 'bro_e',
+                default       => null,
+            };
+
+            if ($column) {
+                // Recalculate from all scores for this nominee (avoids double-counting on update)
+                $summary->{$column} = BroScore::where('nominee_id', $data['nominee_id'])
+                    ->where('criteria_table', $data['criteria_table'])
+                    ->sum('score');
+
+                $summary->bro_total = 
+                    $summary->bro_a + $summary->bro_b + $summary->bro_c + $summary->bro_d + $summary->bro_e;
+                $summary->save();
+            }
+
+            return $broScore;
+        });
+    }
+
+    public function getScore($id)
+    {
+        $data = BroScore::find($id);
+        if (!$data) {
+            return [
+                'status' => 404,
+                'message' => 'Score not found',
+                'data' => null
+            ];
+        }
+
+        return [
+            'status' => 200,
+            'message' => 'Score retrieved successfully',
+            'data' => $data
+        ];
+    }
+
+    public function getScoresForNominee($nomineeId)
+    {
+        $scores = BroScore::where('nominee_id', $nomineeId)
+            ->get();
+
+        return [
+            'status' => 200,
+            'message' => 'Scores retrieved successfully',
+            'data' => $scores
+        ];
+    }
+
+
 }

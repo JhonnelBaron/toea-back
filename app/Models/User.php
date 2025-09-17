@@ -4,6 +4,8 @@ namespace App\Models;
 
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
 
+use App\Models\Evaluation\BroScore;
+use App\Models\Evaluation\Document;
 use Illuminate\Auth\Passwords\CanResetPassword;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
@@ -85,5 +87,15 @@ class User extends Authenticatable implements JWTSubject //, MustVerifyEmail
     public function nominee()
     {
         return $this->hasOne(Nominee::class, 'user_id');
+    }
+
+    public function broScores()
+    {
+        return $this->hasMany(BroScore::class, 'user_id');
+    }
+
+    public function documents()
+    {
+        return $this->hasMany(Document::class, 'uploaded_by');
     }
 }

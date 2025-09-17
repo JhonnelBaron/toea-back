@@ -74,4 +74,48 @@ class EvaluationController extends Controller
             $this->evaluationService->getECriteriaForOffice($office)
         );
     }
+
+    public function get($id)
+    {
+        $nominee = $this->evaluationService->get($id);
+        return response($nominee, $nominee['status']);
+    }
+
+    public function store(Request $request, EvaluationService $evaluationService)
+    {
+        $validated = $request->validate([
+            'nominee_id'     => 'required|exists:nominees,id',
+            'score'          => 'required|numeric|min:0',
+            'remarks'        => 'nullable|string',
+            'criteria_table' => 'required|string|in:a_criterias,b_criterias,c_criterias,d_criterias,e_criterias',
+            'criteria_id'    => 'required|integer',
+            'attachment'     => 'nullable|file|max:2048', // optional file
+        ]);
+
+        // include file if uploaded
+        if ($request->hasFile('attachment')) {
+            $validated['attachment'] = $request->file('attachment');
+        }
+
+        $score = $evaluationService->addScore($validated);
+
+        return response()->json([
+            'status'  => 201,
+            'message' => 'Score recorded successfully.',
+            'data'    => $score
+        ]);
+    }
+
+    public function showScore($id)
+    {
+        $score = $this->evaluationService->getScore($id);
+        return response($score, $score['status']);
+    }
+
+    public function getScores($id)
+    {
+        $nominee = $this->evaluationService->getScoresForNominee($id);
+        return response($nominee, $nominee['status']);
+    }
+
 }
