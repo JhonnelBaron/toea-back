@@ -118,4 +118,15 @@ class EvaluationController extends Controller
         return response($nominee, $nominee['status']);
     }
 
+    public function markAsDone($nomineeId)
+    {
+        $result = $this->evaluationService->markAsDone($nomineeId);
+        return response($result, $result['status']);
+    }
+
+    public function getStatus($nomineeId)
+    {
+        $result = $this->evaluationService->getStatus($nomineeId);
+        return response($result, $result['status']);
+    }
 }

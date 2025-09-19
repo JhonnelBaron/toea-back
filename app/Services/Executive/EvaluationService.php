@@ -9,7 +9,9 @@ use App\Models\DCriteria;
 use App\Models\ECriteria;
 use App\Models\Evaluation\BroScore;
 use App\Models\Evaluation\BroSummary;
+use App\Models\Evaluation\UserNomineeStatus;
 use App\Models\Nominee;
+use App\Models\User;
 use Illuminate\Support\Facades\DB;
 use Tymon\JWTAuth\Contracts\Providers\JWT;
 use Tymon\JWTAuth\Facades\JWTAuth;
@@ -259,6 +261,46 @@ class EvaluationService
                 'data'    => $scores
             ];
     }
+
+    public function markAsDone($nomineeId)
+    {
+        $userId = JWTAuth::user()->id;
+
+        $status = UserNomineeStatus::updateOrCreate(
+            [
+                'user_id'    => $userId,
+                'nominee_id' => $nomineeId,
+            ],
+            [
+                'status' => 'done',
+            ]
+        );
+        return [
+            'status'  => 200,
+            'message' => 'Scores marked as done',
+        ];
+    }
+
+    // In EvaluationService.php
+    public function getStatus($nomineeId)
+    {
+        $userId = JWTAuth::user()->id;
+
+        $record = UserNomineeStatus::where('user_id', $userId)
+            ->where('nominee_id', $nomineeId)
+            ->first();
+
+        return [
+            'status' => 200,
+            'data' => [
+                'nominee_id' => $nomineeId,
+                'user_id'    => $userId,
+                'status'      => $record ? $record->status : 'pending',
+            ]
+        ];
+    }
+
+
 
 
 }

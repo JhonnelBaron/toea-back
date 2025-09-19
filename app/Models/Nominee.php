@@ -4,6 +4,7 @@ namespace App\Models;
 
 use App\Models\Evaluation\BroScore;
 use App\Models\Evaluation\BroSummary;
+use App\Models\Evaluation\UserNomineeStatus;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Notifications\Notifiable;
@@ -35,6 +36,11 @@ class Nominee extends Model
     public function broSummary()
     {
         return $this->hasOne(BroSummary::class, 'nominee_id');
+    }
+
+    public function statusUpdates()
+    {
+        return $this->hasMany(UserNomineeStatus::class, 'nominee_id');
     }
 
 }
