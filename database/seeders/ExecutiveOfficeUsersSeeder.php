@@ -24,7 +24,7 @@ class ExecutiveOfficeUsersSeeder extends Seeder
             'Planning Office',
             'Partnership and Linkages Office',
             'Regional Operations Management Office',
-            'Information and Communication Office',
+            'Information and Communication Technology Office',
             'World Skills'
         ];
 

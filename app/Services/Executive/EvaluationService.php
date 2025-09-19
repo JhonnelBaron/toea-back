@@ -27,7 +27,7 @@ class EvaluationService
         'Planning Office' => 'planning',
         'Partnership and Linkages Office' => 'plo',
         'Regional Operations Management Office' => 'romo',
-        'Information and Communication Office' => 'icto',
+        'Information and Communication Technology Office' => 'icto',
         'World Skills' => 'ws',
         'Gender and Development TESDA Women Center' => 'gadtwc',
         'Community-Based Technical Vocational Education and Training Office' => 'cbtveto'
@@ -239,14 +239,25 @@ class EvaluationService
 
     public function getScoresForNominee($nomineeId)
     {
-        $scores = BroScore::where('nominee_id', $nomineeId)
-            ->get();
+        // $scores = BroScore::where('nominee_id', $nomineeId)
+        //     ->get();
 
-        return [
-            'status' => 200,
-            'message' => 'Scores retrieved successfully',
-            'data' => $scores
-        ];
+        // return [
+        //     'status' => 200,
+        //     'message' => 'Scores retrieved successfully',
+        //     'data' => $scores
+        // ];
+            $userId = JWTAuth::user()->id;
+
+            $scores = BroScore::where('nominee_id', $nomineeId)
+                ->where('user_id', $userId)
+                ->get();
+
+            return [
+                'status'  => 200,
+                'message' => 'Scores retrieved successfully',
+                'data'    => $scores
+            ];
     }
 
 
