@@ -116,6 +116,7 @@ Route::middleware(['auth:api'])->group(function () {
     Route::get('/scores/nominee/{id}', [EvaluationController::class, 'getScores']);
     Route::post('/scores-done/nominee/{id}', [EvaluationController::class, 'markAsDone']);
     Route::get('/scores-done/nominee/{id}', [EvaluationController::class, 'getStatus']);
+    Route::post('/scores/aggregate', [EvaluationController::class, 'completionRate']);
     //Dashboard for Executive
     Route::get('/dashboard/bro-nominees', [DashboardController::class, 'getBroNominees']);
 });

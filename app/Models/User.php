@@ -6,6 +6,7 @@ namespace App\Models;
 
 use App\Models\Evaluation\BroScore;
 use App\Models\Evaluation\Document;
+use App\Models\Evaluation\ExecutiveScore;
 use App\Models\Evaluation\UserNomineeStatus;
 use Illuminate\Auth\Passwords\CanResetPassword;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -29,6 +30,7 @@ class User extends Authenticatable implements JWTSubject //, MustVerifyEmail
         'last_name',
         'designation',
         'office',
+        'overall_completion_rate',
         'email',
         'password',
     ];
@@ -103,5 +105,10 @@ class User extends Authenticatable implements JWTSubject //, MustVerifyEmail
     public function statusUpdates()
     {
         return $this->hasMany(UserNomineeStatus::class, 'user_id');
+    }
+
+    public function executiveScores()
+    {
+        return $this->hasMany(ExecutiveScore::class, 'user_id');
     }
 }

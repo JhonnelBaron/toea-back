@@ -9,6 +9,7 @@ use App\Models\DCriteria;
 use App\Models\ECriteria;
 use App\Models\Evaluation\BroScore;
 use App\Models\Evaluation\BroSummary;
+use App\Models\Evaluation\ExecutiveScore;
 use App\Models\Evaluation\UserNomineeStatus;
 use App\Models\Nominee;
 use App\Models\User;
@@ -299,6 +300,53 @@ class EvaluationService
             ]
         ];
     }
+
+   public function updateAggregate(array $data)
+    {
+        $user = JWTAuth::user();
+        if (!$user) {
+            return [
+                'status' => 401,
+                'message' => 'Unauthorized',
+            ];
+        }
+
+        // 1. Save or update the executive score for this region
+        $executiveScore = ExecutiveScore::updateOrCreate(
+            [
+                'user_id'    => $user->id,
+                'nominee_id' => $data['nominee_id'],
+            ],
+            [
+                'total_score'     => $data['total_score'],
+                'overall_score'   => $data['max_score'],
+                'completion_rate' => $data['completion_rate'],
+            ]
+        );
+
+        // 2. Get all regions this user is evaluating
+        $allRegions = ExecutiveScore::where('user_id', $user->id)->get();
+
+        // 3. Compute average completion across 16 regions
+        // (if fewer than 16 exist yet, missing ones are treated as 0%)
+        $sumCompletion = $allRegions->sum('completion_rate');
+        $regionCount   = 16; // fixed number of regions to evaluate
+
+        $overallCompletionRate = $sumCompletion / $regionCount;
+
+        // 4. Update the user's overall completion rate
+        $user->update([
+            'overall_completion_rate' => $overallCompletionRate,
+        ]);
+
+        return [
+            'status' => 200,
+            'message' => 'Aggregate updated successfully',
+            'executive_score' => $executiveScore,
+            'overall_completion_rate' => $overallCompletionRate,
+        ];
+    }
+
 
 
 

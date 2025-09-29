@@ -4,6 +4,7 @@ namespace App\Models;
 
 use App\Models\Evaluation\BroScore;
 use App\Models\Evaluation\BroSummary;
+use App\Models\Evaluation\ExecutiveScore;
 use App\Models\Evaluation\UserNomineeStatus;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -43,4 +44,8 @@ class Nominee extends Model
         return $this->hasMany(UserNomineeStatus::class, 'nominee_id');
     }
 
+    public function executiveScores()
+    {
+        return $this->hasMany(ExecutiveScore::class, 'nominee_id');
+    }
 }

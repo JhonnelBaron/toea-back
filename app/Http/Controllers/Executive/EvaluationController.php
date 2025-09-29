@@ -129,4 +129,10 @@ class EvaluationController extends Controller
         $result = $this->evaluationService->getStatus($nomineeId);
         return response($result, $result['status']);
     }
+
+    public function completionRate(Request $request)
+    {
+        $result = $this->evaluationService->updateAggregate($request->all());
+        return response($result, $result['status']);
+    }
 }
