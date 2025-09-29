@@ -20,4 +20,10 @@ class DashboardController extends Controller
         $response = $this->dashboardService->getBroNominees();
         return response($response, $response['status']);
     }
+
+    public function getScoreRating()
+    {
+        $response = $this->dashboardService->getScoreRating();
+        return response($response, $response['status']);
+    }
 }
