@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Admin\CriteriaController;
+use App\Http\Controllers\Admin\DashboardController as AdminDashboardController;
 use App\Http\Controllers\Admin\RopotiController;
 use App\Http\Controllers\Admin\UserController;
 use App\Http\Controllers\AuthController;
@@ -102,6 +103,10 @@ Route::middleware(['auth:api'])->group(function () {
     Route::get('/users/{id}', [UserController::class, 'show']);
     Route::post('/users/{id}', [UserController::class, 'update']);
     Route::delete('/users/{id}', [UserController::class, 'delete']);
+
+    //ADMIN DASHBOARD
+    Route::get('/dashboard/nominees', [AdminDashboardController::class, 'getCounts']);
+    Route::get('/dashboard/users', [AdminDashboardController::class, 'getUsers']);
 
     //Evaluation for Executive
     Route::get('/criterias', [EvaluationController::class, 'index']);
