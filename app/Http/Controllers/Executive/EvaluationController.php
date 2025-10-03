@@ -89,7 +89,7 @@ class EvaluationController extends Controller
             'remarks'        => 'nullable|string',
             'criteria_table' => 'required|string|in:a_criterias,b_criterias,c_criterias,d_criterias,e_criterias',
             'criteria_id'    => 'required|integer',
-            'attachment'     => 'nullable|file|max:2048', // optional file
+            'attachment'     => 'nullable|file|max:20480', // optional file
         ]);
 
         // include file if uploaded
