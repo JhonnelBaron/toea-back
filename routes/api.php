@@ -107,7 +107,17 @@ Route::middleware(['auth:api'])->group(function () {
     //ADMIN DASHBOARD
     Route::get('/dashboard/nominees', [AdminDashboardController::class, 'getCounts']);
     Route::get('/dashboard/users', [AdminDashboardController::class, 'getUsers']);
-
+    Route::get('/users/{id}/ratings', [AdminDashboardController::class, 'getRatings']);
+    Route::get('/all/criteria/a', [AdminDashboardController::class, 'getBroCriteriaA']);
+    Route::get('/all/criteria/b', [AdminDashboardController::class, 'getBroCriteriaB']);
+    Route::get('/all/criteria/c', [AdminDashboardController::class, 'getBroCriteriaC']);
+    Route::get('/all/criteria/d', [AdminDashboardController::class, 'getBroCriteriaD']);
+    Route::get('/all/criteria/e', [AdminDashboardController::class, 'getBroCriteriaE']);
+    Route::get('/scores/a/{nomineeId}', [AdminDashboardController::class, 'getScoresA']);
+    Route::get('/scores/b/{nomineeId}', [AdminDashboardController::class, 'getScoresB']);
+    Route::get('/scores/c/{nomineeId}', [AdminDashboardController::class, 'getScoresC']);
+    Route::get('/scores/d/{nomineeId}', [AdminDashboardController::class, 'getScoresD']);
+    Route::get('/scores/e/{nomineeId}', [AdminDashboardController::class, 'getScoresE']);
     //Evaluation for Executive
     Route::get('/criterias', [EvaluationController::class, 'index']);
     Route::get('/criteria/a', [EvaluationController::class, 'getACriteria']);
