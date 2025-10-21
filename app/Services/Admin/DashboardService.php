@@ -8,6 +8,7 @@ use App\Models\CCriteria;
 use App\Models\DCriteria;
 use App\Models\ECriteria;
 use App\Models\Evaluation\BroScore;
+use App\Models\Evaluation\BroSummary;
 use App\Models\Evaluation\ExecutiveScore;
 use App\Models\Nominee;
 use App\Models\User;
@@ -225,6 +226,43 @@ class DashboardService
     {
         return $this->getScoresByCriteriaTable($nomineeId, 'e_criterias');
     }
+
+    public function get(Request $request)
+    {
+        $query = BroSummary::with('nominee');
+
+        // Filter by nominee_type
+        if ($request->filled('nominee_type')) {
+            $query->whereHas('nominee', function ($q) use ($request) {
+                $q->where('nominee_type', $request->nominee_type);
+            });
+        }
+
+        // Filter by nominee_category
+        if ($request->filled('nominee_category')) {
+            $query->whereHas('nominee', function ($q) use ($request) {
+                $q->where('nominee_category', $request->nominee_category);
+            });
+        }
+
+        // Search by nominee_name (partial match)
+        if ($request->filled('nominee_name')) {
+            $query->whereHas('nominee', function ($q) use ($request) {
+                $q->where('nominee_name', 'like', '%' . $request->nominee_name . '%');
+            });
+        }
+
+        $query->orderByDesc('bro_total');
+
+        $data = $query->get();
+
+        return [
+            'status' => 200,
+            'message' => 'BRO summaries retrieved successfully.',
+            'data' => $data,
+        ];
+    }
+
 
 
     

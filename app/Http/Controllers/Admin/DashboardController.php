@@ -88,4 +88,10 @@ class DashboardController extends Controller
         return response($response, $response['status']);
     }
 
+    public function get(Request $request)
+    {
+        $response = $this->dashboardService->get($request);
+        return response($response, $response['status']);
+    }
+
 }

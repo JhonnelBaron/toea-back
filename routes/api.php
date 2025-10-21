@@ -118,6 +118,7 @@ Route::middleware(['auth:api'])->group(function () {
     Route::get('/scores/c/{nomineeId}', [AdminDashboardController::class, 'getScoresC']);
     Route::get('/scores/d/{nomineeId}', [AdminDashboardController::class, 'getScoresD']);
     Route::get('/scores/e/{nomineeId}', [AdminDashboardController::class, 'getScoresE']);
+    Route::get('/bro-summaries', [AdminDashboardController::class, 'get']);
     //Evaluation for Executive
     Route::get('/criterias', [EvaluationController::class, 'index']);
     Route::get('/criteria/a', [EvaluationController::class, 'getACriteria']);
