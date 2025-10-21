@@ -253,13 +253,86 @@ class DashboardService
         }
 
         $query->orderByDesc('bro_total');
-
         $data = $query->get();
+
+        foreach ($data as $item) {
+            $nomineeId = $item->nominee_id;
+
+            $item->A_percentage = $this->countApercentage($nomineeId);
+            $item->B_percentage = $this->countBpercentage($nomineeId);
+            $item->C_percentage = $this->countCpercentage($nomineeId);
+            $item->D_percentage = $this->countDpercentage($nomineeId);
+            $item->E_percentage = $this->countEpercentage($nomineeId);
+            $item->total_percentage = $this->totalpercentage($nomineeId);
+        }
 
         return [
             'status' => 200,
             'message' => 'BRO summaries retrieved successfully.',
             'data' => $data,
+        ];
+    }
+
+    private function countApercentage($nomineeId)
+    {
+        $data = BroScore::where('criteria_table', 'a_criterias')
+            ->where('nominee_id', $nomineeId)
+            ->count();
+        $percentage = ($data / 10) * 100;
+        return $percentage;
+    }
+    private function countBpercentage($nomineeId)
+    {
+        $data = BroScore::where('criteria_table', 'b_criterias')
+            ->where('nominee_id', $nomineeId)
+            ->count();
+        $percentage = ($data / 50) * 100;
+        return $percentage;
+    }
+    private function countCpercentage($nomineeId)
+    {
+        $data = BroScore::where('criteria_table', 'c_criterias')
+            ->where('nominee_id', $nomineeId)
+            ->count();
+        $percentage = ($data / 12) * 100;
+        return $percentage;
+    }
+    private function countDpercentage($nomineeId)
+    {
+        $data = BroScore::where('criteria_table', 'd_criterias')
+            ->where('nominee_id', $nomineeId)
+            ->count();
+        $percentage = ($data / 9) * 100;
+        return $percentage;
+    }
+    private function countEpercentage($nomineeId)
+    {
+        $data = BroScore::where('criteria_table', 'e_criterias')
+            ->where('nominee_id', $nomineeId)
+            ->count();
+        $percentage = ($data / 1) * 100;
+        return $percentage;
+    }
+    private function totalpercentage($nomineeId)
+    {
+        $data = BroScore::where('nominee_id', $nomineeId)->count();
+        $percentage = ($data / 82) * 100;
+        return $percentage;
+    }
+
+    public function getPercentages($nomineeId)
+    {
+        return [
+            'status' => 200,
+            'message' => 'Criteria percentages retrieved successfully.',
+            'data' => [
+                'A_percentage' => $this->countApercentage($nomineeId),
+                'B_percentage' => $this->countBpercentage($nomineeId),
+                'C_percentage' => $this->countCpercentage($nomineeId),
+                'D_percentage' => $this->countDpercentage($nomineeId),
+                'E_percentage' => $this->countEpercentage($nomineeId),
+                'total_percentage' => $this->totalpercentage($nomineeId),
+            ],
         ];
     }
 
