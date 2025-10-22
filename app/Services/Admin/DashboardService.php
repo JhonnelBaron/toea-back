@@ -13,18 +13,26 @@ use App\Models\Evaluation\ExecutiveScore;
 use App\Models\Nominee;
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class DashboardService
 {
     public function getNominees()
     {
+        $bro = $this->getBroStats();
+        $gp = $this->getGpStats();
+        $bti = $this->getBtiStats();
+
+        // 🔹 Add all nominee totals together (from both main and external if your functions handle them)
+        $totalNominees = ($bro['count'] ?? 0) + ($gp['count'] ?? 0) + ($bti['count'] ?? 0);
+
         return [
             'status' => 200,
             'message' => 'Dashboard counts retrieved successfully.',
-            'total_nominees' => Nominee::count(),
-            'bro' => $this->getBroStats(),
-            'gp' => $this->getGpStats(),
-            'bti' => $this->getBtiStats(),
+            'total_nominees' => $totalNominees,
+            'bro' => $bro,
+            'gp' => $gp,
+            'bti' => $bti,
             'users_by_type' => $this->getUserStats(),
         ];
     }
@@ -52,12 +60,19 @@ class DashboardService
      */
     private function getGpStats()
     {
-        $count = Nominee::where('nominee_type', 'GP')->count();
+        $count = DB::connection('mysql') // or your connection name
+        ->table('u782169281_test_jd.nominees')
+        ->where('nominee_type', 'GP')
+        ->count();
 
-        $categories = Nominee::where('nominee_type', 'GP')
+        $categories = DB::connection('mysql')
+            ->table('u782169281_test_jd.nominees')
+            ->where('nominee_type', 'GP')
             ->selectRaw('nominee_category, COUNT(*) as total')
             ->groupBy('nominee_category')
             ->pluck('total', 'nominee_category');
+        
+        $count = max(0, $count - 1);
 
         return [
             'count' => $count,
@@ -70,12 +85,19 @@ class DashboardService
      */
     private function getBtiStats()
     {
-        $count = Nominee::where('nominee_type', 'BTI')->count();
+        $count = DB::connection('mysql') // or your connection name
+        ->table('u782169281_test_jd.nominees')
+        ->where('nominee_type', 'BTI')
+        ->count();
 
-        $categories = Nominee::where('nominee_type', 'BTI')
+        $categories = DB::connection('mysql')
+            ->table('u782169281_test_jd.nominees')
+            ->where('nominee_type', 'BTI')
             ->selectRaw('nominee_category, COUNT(*) as total')
             ->groupBy('nominee_category')
             ->pluck('total', 'nominee_category');
+
+        $count = max(0, $count - 1);
 
         return [
             'count' => $count,
@@ -88,9 +110,29 @@ class DashboardService
      */
     private function getUserStats()
     {
-        return User::selectRaw('user_type, COUNT(*) as total')
+        // 🔹 Count users from your main Laravel database
+        $mainData = User::selectRaw('user_type, COUNT(*) as total')
             ->groupBy('user_type')
             ->pluck('total', 'user_type');
+
+        // 🔹 Count users from the other database (u782169281_test_jd.users)
+        $externalData = DB::connection('mysql') // same connection, just specify DB name
+            ->table('u782169281_test_jd.users')
+            ->selectRaw('user_type, COUNT(*) as total')
+            ->groupBy('user_type')
+            ->pluck('total', 'user_type');
+
+        // 🔹 Merge both counts (adding totals where user_type matches)
+        $combined = $mainData->mergeRecursive($externalData)->map(function ($item) {
+            // handle cases where both sources have the same user_type
+            return is_array($item) ? array_sum($item) : $item;
+        });
+
+        return [
+            'status' => 200,
+            'message' => 'User stats retrieved successfully.',
+            'data' => $combined
+        ];
     }
 
     public function getUsers(Request $request)
