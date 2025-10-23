@@ -60,13 +60,13 @@ class DashboardService
      */
     private function getGpStats()
     {
-        $count = DB::connection('mysql') // or your connection name
-        ->table('u782169281_test_jd.nominees')
+        $count = DB::connection('mysql_jd') // or your connection name
+        ->table('nominees')
         ->where('nominee_type', 'GP')
         ->count();
 
-        $categories = DB::connection('mysql')
-            ->table('u782169281_test_jd.nominees')
+        $categories = DB::connection('mysql_jd')
+            ->table('nominees')
             ->where('nominee_type', 'GP')
             ->selectRaw('nominee_category, COUNT(*) as total')
             ->groupBy('nominee_category')
@@ -85,13 +85,13 @@ class DashboardService
      */
     private function getBtiStats()
     {
-        $count = DB::connection('mysql') // or your connection name
-        ->table('u782169281_test_jd.nominees')
+        $count = DB::connection('mysql_jd') // or your connection name
+        ->table('nominees')
         ->where('nominee_type', 'BTI')
         ->count();
 
-        $categories = DB::connection('mysql')
-            ->table('u782169281_test_jd.nominees')
+        $categories = DB::connection('mysql_jd')
+            ->table('nominees')
             ->where('nominee_type', 'BTI')
             ->selectRaw('nominee_category, COUNT(*) as total')
             ->groupBy('nominee_category')
@@ -116,8 +116,8 @@ class DashboardService
             ->pluck('total', 'user_type');
 
         // 🔹 Count users from the other database (u782169281_test_jd.users)
-        $externalData = DB::connection('mysql') // same connection, just specify DB name
-            ->table('u782169281_test_jd.users')
+        $externalData = DB::connection('mysql_jd') // same connection, just specify DB name
+            ->table('users')
             ->selectRaw('user_type, COUNT(*) as total')
             ->groupBy('user_type')
             ->pluck('total', 'user_type');
