@@ -12,6 +12,7 @@ class BroSummary extends Model
     use HasFactory, Notifiable;
     protected $fillable = [
         'nominee_id',
+        'endorse_externals',
         'final_score',
         'bro_total',
         'bro_a',

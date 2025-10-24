@@ -378,6 +378,29 @@ class DashboardService
         ];
     }
 
+    public function endorseFinalist($nomineeId)
+    {
+        $nominee = BroSummary::where('nominee_id', $nomineeId)->first();
+
+        if (!$nominee) {
+            return response()->json([
+                'status' => 404,
+                'message' => 'Nominee not found.',
+            ], 404);
+        }
+
+        // Flip the boolean value
+        $nominee->endorse_externals = !$nominee->endorse_externals;
+        $nominee->save();
+
+        return [
+            'status' => 200,
+            'message' => $nominee->endorse_externals
+                ? 'Nominee endorsed successfully.'
+                : 'Nominee endorsement removed.',
+            'data' => $nominee,
+        ];
+    }
 
 
     

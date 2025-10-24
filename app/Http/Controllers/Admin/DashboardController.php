@@ -94,4 +94,11 @@ class DashboardController extends Controller
         return response($response, $response['status']);
     }
 
+    public function endorseExternals(Request $request, $nomineeId)
+    {
+        $response = $this->dashboardService->endorseFinalist($nomineeId);
+        return response()->json($response, $response['status']);
+    }
+
+
 }
