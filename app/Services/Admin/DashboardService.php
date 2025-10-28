@@ -58,92 +58,15 @@ class DashboardService
     /**
      * GP nominees with category breakdown
      */
-    // private function getGpStats()
-    // {
-    //     $count = DB::connection('mysql_jd') // or your connection name
-    //     ->table('nominees')
-    //     ->where('nominee_type', 'GP')
-    //     ->count();
-
-    //     $categories = DB::connection('mysql_jd')
-    //         ->table('nominees')
-    //         ->where('nominee_type', 'GP')
-    //         ->selectRaw('nominee_category, COUNT(*) as total')
-    //         ->groupBy('nominee_category')
-    //         ->pluck('total', 'nominee_category');
-        
-    //     $count = max(0, $count - 1);
-
-    //     return [
-    //         'count' => $count,
-    //         'categories' => $categories,
-    //     ];
-    // }
-
-    // /**
-    //  * BTI nominees with category breakdown
-    //  */
-    // private function getBtiStats()
-    // {
-    //     $count = DB::connection('mysql_jd') // or your connection name
-    //     ->table('nominees')
-    //     ->where('nominee_type', 'BTI')
-    //     ->count();
-
-    //     $categories = DB::connection('mysql_jd')
-    //         ->table('nominees')
-    //         ->where('nominee_type', 'BTI')
-    //         ->selectRaw('nominee_category, COUNT(*) as total')
-    //         ->groupBy('nominee_category')
-    //         ->pluck('total', 'nominee_category');
-
-    //     $count = max(0, $count - 1);
-
-    //     return [
-    //         'count' => $count,
-    //         'categories' => $categories,
-    //     ];
-    // }
-
-    // /**
-    //  * Users by type (secretariat, external validator, executive office focal, etc.)
-    //  */
-    // private function getUserStats()
-    // {
-    //     // 🔹 Count users from your main Laravel database
-    //     $mainData = User::selectRaw('user_type, COUNT(*) as total')
-    //         ->groupBy('user_type')
-    //         ->pluck('total', 'user_type');
-
-    //     // 🔹 Count users from the other database (u782169281_test_jd.users)
-    //     $externalData = DB::connection('mysql_jd') // same connection, just specify DB name
-    //         ->table('users')
-    //         ->selectRaw('user_type, COUNT(*) as total')
-    //         ->groupBy('user_type')
-    //         ->pluck('total', 'user_type');
-
-    //     // 🔹 Merge both counts (adding totals where user_type matches)
-    //     $combined = $mainData->mergeRecursive($externalData)->map(function ($item) {
-    //         // handle cases where both sources have the same user_type
-    //         return is_array($item) ? array_sum($item) : $item;
-    //     });
-
-    //     return [
-    //         'status' => 200,
-    //         'message' => 'User stats retrieved successfully.',
-    //         'data' => $combined
-    //     ];
-    // }
-
     private function getGpStats()
     {
-        $count = DB::connection('mysql') // or your connection name
-        ->table('u782169281_test_jd.nominees')
+        $count = DB::connection('mysql_jd') // or your connection name
+        ->table('nominees')
         ->where('nominee_type', 'GP')
         ->count();
 
-        $categories = DB::connection('mysql')
-            ->table('u782169281_test_jd.nominees')
+        $categories = DB::connection('mysql_jd')
+            ->table('nominees')
             ->where('nominee_type', 'GP')
             ->selectRaw('nominee_category, COUNT(*) as total')
             ->groupBy('nominee_category')
@@ -162,13 +85,13 @@ class DashboardService
      */
     private function getBtiStats()
     {
-        $count = DB::connection('mysql') // or your connection name
-        ->table('u782169281_test_jd.nominees')
+        $count = DB::connection('mysql_jd') // or your connection name
+        ->table('nominees')
         ->where('nominee_type', 'BTI')
         ->count();
 
-        $categories = DB::connection('mysql')
-            ->table('u782169281_test_jd.nominees')
+        $categories = DB::connection('mysql_jd')
+            ->table('nominees')
             ->where('nominee_type', 'BTI')
             ->selectRaw('nominee_category, COUNT(*) as total')
             ->groupBy('nominee_category')
@@ -193,8 +116,8 @@ class DashboardService
             ->pluck('total', 'user_type');
 
         // 🔹 Count users from the other database (u782169281_test_jd.users)
-        $externalData = DB::connection('mysql') // same connection, just specify DB name
-            ->table('u782169281_test_jd.users')
+        $externalData = DB::connection('mysql_jd') // same connection, just specify DB name
+            ->table('users')
             ->selectRaw('user_type, COUNT(*) as total')
             ->groupBy('user_type')
             ->pluck('total', 'user_type');
@@ -211,6 +134,83 @@ class DashboardService
             'data' => $combined
         ];
     }
+
+    // private function getGpStats()
+    // {
+    //     $count = DB::connection('mysql') // or your connection name
+    //     ->table('u782169281_test_jd.nominees')
+    //     ->where('nominee_type', 'GP')
+    //     ->count();
+
+    //     $categories = DB::connection('mysql')
+    //         ->table('u782169281_test_jd.nominees')
+    //         ->where('nominee_type', 'GP')
+    //         ->selectRaw('nominee_category, COUNT(*) as total')
+    //         ->groupBy('nominee_category')
+    //         ->pluck('total', 'nominee_category');
+        
+    //     $count = max(0, $count - 1);
+
+    //     return [
+    //         'count' => $count,
+    //         'categories' => $categories,
+    //     ];
+    // }
+
+    // /**
+    //  * BTI nominees with category breakdown
+    //  */
+    // private function getBtiStats()
+    // {
+    //     $count = DB::connection('mysql') // or your connection name
+    //     ->table('u782169281_test_jd.nominees')
+    //     ->where('nominee_type', 'BTI')
+    //     ->count();
+
+    //     $categories = DB::connection('mysql')
+    //         ->table('u782169281_test_jd.nominees')
+    //         ->where('nominee_type', 'BTI')
+    //         ->selectRaw('nominee_category, COUNT(*) as total')
+    //         ->groupBy('nominee_category')
+    //         ->pluck('total', 'nominee_category');
+
+    //     $count = max(0, $count - 1);
+
+    //     return [
+    //         'count' => $count,
+    //         'categories' => $categories,
+    //     ];
+    // }
+
+    // /**
+    //  * Users by type (secretariat, external validator, executive office focal, etc.)
+    //  */
+    // private function getUserStats()
+    // {
+    //     // 🔹 Count users from your main Laravel database
+    //     $mainData = User::selectRaw('user_type, COUNT(*) as total')
+    //         ->groupBy('user_type')
+    //         ->pluck('total', 'user_type');
+
+    //     // 🔹 Count users from the other database (u782169281_test_jd.users)
+    //     $externalData = DB::connection('mysql') // same connection, just specify DB name
+    //         ->table('u782169281_test_jd.users')
+    //         ->selectRaw('user_type, COUNT(*) as total')
+    //         ->groupBy('user_type')
+    //         ->pluck('total', 'user_type');
+
+    //     // 🔹 Merge both counts (adding totals where user_type matches)
+    //     $combined = $mainData->mergeRecursive($externalData)->map(function ($item) {
+    //         // handle cases where both sources have the same user_type
+    //         return is_array($item) ? array_sum($item) : $item;
+    //     });
+
+    //     return [
+    //         'status' => 200,
+    //         'message' => 'User stats retrieved successfully.',
+    //         'data' => $combined
+    //     ];
+    // }
 
 
     public function getUsers(Request $request)
