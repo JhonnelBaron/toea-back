@@ -138,3 +138,8 @@ Route::middleware(['auth:api'])->group(function () {
     Route::get('/dashboard/bro-nominees', [DashboardController::class, 'getBroNominees']);
     Route::get('/dashboard/score-rating', [DashboardController::class, 'getScoreRating']);
 });
+    Route::get('/ext/scores/a/{nomineeId}', [AdminDashboardController::class, 'getScoresA']);
+    Route::get('/ext/scores/b/{nomineeId}', [AdminDashboardController::class, 'getScoresB']);
+    Route::get('/ext/scores/c/{nomineeId}', [AdminDashboardController::class, 'getScoresC']);
+    Route::get('/ext/scores/d/{nomineeId}', [AdminDashboardController::class, 'getScoresD']);
+    Route::get('/ext/scores/e/{nomineeId}', [AdminDashboardController::class, 'getScoresE']);
