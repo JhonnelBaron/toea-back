@@ -96,12 +96,12 @@ class FinalistService
 
         return $broFinalists;
     }
-    
+
     private function getGpFinalist()
     {
         $gpFinalists = DB::connection('mysql_jd')
-            ->table('mysql_jd.combined_evaluations as ce')
-            ->join('mysql_jd.nominees as n', 'ce.user_id', '=', 'n.user_id')
+            ->table('combined_evaluations as ce')
+            ->join('nominees as n', 'ce.user_id', '=', 'n.user_id')
             ->where('ce.status', 'endorsed_to_external_validator')
             ->where('n.nominee_type', 'GP')
             ->select(
@@ -117,8 +117,8 @@ class FinalistService
         private function getTtiFinalist()
     {
         $ttiFinalists = DB::connection('mysql_jd')
-            ->table('mysql_jd.combined_evaluations as ce')
-            ->join('mysql_jd.nominees as n', 'ce.user_id', '=', 'n.user_id')
+            ->table('combined_evaluations as ce')
+            ->join('nominees as n', 'ce.user_id', '=', 'n.user_id')
             ->where('ce.status', 'endorsed_to_external_validator')
             ->where('n.nominee_type', 'BTI')
             ->select(
