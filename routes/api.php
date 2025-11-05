@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\Admin\CriteriaController;
 use App\Http\Controllers\Admin\DashboardController as AdminDashboardController;
+use App\Http\Controllers\Admin\FinalistController;
 use App\Http\Controllers\Admin\RopotiController;
 use App\Http\Controllers\Admin\UserController;
 use App\Http\Controllers\AuthController;
@@ -137,6 +138,11 @@ Route::middleware(['auth:api'])->group(function () {
     //Dashboard for Executive
     Route::get('/dashboard/bro-nominees', [DashboardController::class, 'getBroNominees']);
     Route::get('/dashboard/score-rating', [DashboardController::class, 'getScoreRating']);
+
+    //FINALISTS
+    Route::get('/finalists', [FinalistController::class, 'get']);
+    Route::get('/finalists/total', [FinalistController::class, 'total']);
+    Route::get('/finalists/bro', [FinalistController::class, 'broFinalists']);
 });
     Route::get('/ext/scores/a/{nomineeId}', [AdminDashboardController::class, 'getScoresA']);
     Route::get('/ext/scores/b/{nomineeId}', [AdminDashboardController::class, 'getScoresB']);
