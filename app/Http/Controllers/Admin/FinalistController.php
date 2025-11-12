@@ -15,15 +15,15 @@ class FinalistController extends Controller
         $this->finalistService = $finalistService;
     }
 
-    public function get()
+    public function get(Request $request)
     {
-        $finalist = $this->finalistService->getFinalists();
+        $finalist = $this->finalistService->getFinalists($request);
         return response($finalist, $finalist['status']);
     }
 
     public function total()
     {
-        $totalFinalists = $this->finalistService->totalFinalists();
+        $totalFinalists = $this->finalistService->totalFinalists(request());
         return response($totalFinalists, $totalFinalists['status']);
     }
 
