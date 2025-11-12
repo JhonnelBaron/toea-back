@@ -729,7 +729,7 @@ public function countBpercentageGP($combinedEvaluationId)
             ->count();
 
         // Step 2: Get nominee category using the combined evaluation
-        $nominee = DB::connection('mysql')
+        $nominee = DB::connection('mysql_jd')
             ->table('combined_evaluations as ce')
             ->join('nominees as n', 'ce.user_id', '=', 'n.user_id')
             ->where('ce.id', $combinedEvaluationId)
